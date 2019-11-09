@@ -35,6 +35,12 @@ input, button{
         }
         async componentDidMount(){
           this.setState({ products: ( await axios.get('/api/products')).data});
+          console.log(this.state.products);
+        }
+
+        createUser(){
+         const user = this.state.products
+
         }
         render(){
           const { products, name, error, price } = this.state;
@@ -49,8 +55,12 @@ input, button{
               </div>
               <ul>
                 {
-                  products.map( product => <li onClick={()=> console.log('TO DO Destroy')} key={ product.id }>
-                    <div>{ product.name }</div>
+                  products.map( product => <li onClick={
+                    (ev)=> {
+                      axios.delete('/api/products',products[product.id-1]); 
+
+                  } }key={ product.id }>
+                    <div>{ product.name.toUpperCase() }<br/>${ product.price.toFixed(2) }</div>
                   </li>)
                 }
               </ul>
